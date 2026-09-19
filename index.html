@@ -1,22 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>WebAR Dream World</title>
+    <!-- โหลด A-Frame และ MindAR เวอร์ชันเสถียรสำหรับ iOS -->
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+    <style>
+      body { margin: 0; overflow: hidden; }
+    </style>
   </head>
   <body>
-    <a-scene mindar-image="imageTargetSrc: targets.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <!-- ฉาก WebAR -->
+    <a-scene 
+      mindar-image="imageTargetSrc: ./targets.mind;" 
+      color-space="sRGB" 
+      renderer="colorManagement: true, physicallyCorrectLights: true" 
+      vr-mode-ui="enabled: false" 
+      device-orientation-permission-ui="enabled: false">
+      
       <a-assets>
-        <!-- เปลี่ยน 'my-model.glb' เป็นชื่อไฟล์โมเดล 3D ของคุณ -->
-        <a-asset-item id="model" src="my-model.glb"></a-asset-item>
+        <!-- ดึงรูปภาพที่คุณส่งมาแสดงเป็น AR แทนโมเดล 3D -->
+        <img id="arImage" src="https://i.postimg.cc/QdJ60vJC/S-142827525.jpg" crossorigin="anonymous" />
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
+      <!-- สแกนเจอ Target ใบแรก (Index 0) -->
       <a-entity mindar-image-target="targetIndex: 0">
-        <!-- ปรับ position, scale, และ rotation ตามความเหมาะสม -->
-        <a-gltf-model rotation="0 0 0 " position="0 0 0" scale="0.1 0.1 0.1" src="#model"></a-gltf-model>
+        <!-- แสดงรูปภาพเป็นระนาบ 3D ลอยขึ้นมาจากจุดสแกน -->
+        <a-plane 
+          src="#arImage" 
+          position="0 0 0.1" 
+          height="1.3" 
+          width="1.0" 
+          rotation="0 0 0">
+        </a-plane>
       </a-entity>
     </a-scene>
   </body>
